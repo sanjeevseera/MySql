@@ -36,3 +36,7 @@ There are a total of [occupation_count] [occupation]s.
 where [occupation_count] is the number of occurrences of an occupation in OCCUPATIONS and [occupation] is the lowercase occupation name.
 If more than one Occupation has the same [occupation_count], they should be ordered alphabetically.
 */
+select CONCAT(name,'(',SUBSTRING(occupation,1,1),')') from OCCUPATIONS order by name ASC;
+
+select "There are a total of",count(occupation),concat(lower(occupation),'s.') from OCCUPATIONS 
+group by occupation ORDER by count(occupation) ASC;
