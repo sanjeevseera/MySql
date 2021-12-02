@@ -87,3 +87,39 @@ The sum of all values in LAT_N rounded to a scale of 2 decimal places.
 The sum of all values in LONG_W rounded to a scale of 2 decimal places.
 */
 select ROUND(sum(lat_n),2), ROUND(sum(long_w),2) from station;
+
+
+/*
+Query the average population of all cities in CITY where District is California.
+*/
+select sum(population)/count(population) from city where district='california';
+
+/*
+Query the average population for all cities in CITY, rounded down to the nearest integer.
+*/
+select ROUND(sum(population)/count(population)) from city;
+
+/*
+Query the difference between the maximum and minimum populations in CITY.
+*/
+select max(population)-min(population) from city;
+
+
+/*
+Samantha was tasked with calculating the average monthly salaries for all employees in the EMPLOYEES table, 
+but did not realize her keyboard's  key was broken until after completing the calculation. 
+She wants your help finding the difference between her miscalculation (using salaries with any zeros removed), and the actual average salary.
+
+Write a query calculating the amount of error (i.e.:  average monthly salaries), and round it up to the next integer.
+*/
+select ROUND(sum(salary)/count(salary)) -
+       ROUND(sum(TRIM(REPLACE(salary, "0", "")))/count(salary))
+       from employees;
+       
+ /*
+ We define an employee's total earnings to be their monthly salary*months worked, 
+ and the maximum total earnings to be the maximum total earnings for any employee in the Employee table. 
+ Write a query to find the maximum total earnings for all employees as well as the total number of employees who have maximum total earnings. 
+ Then print these values as 2 space-separated integers.
+ */
+ select months*salary, count(months) from employee where (select MAX(months*salary) from employee order BY months*salary desc)=months*salary group by months*salary;
